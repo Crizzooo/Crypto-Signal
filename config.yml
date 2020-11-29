@@ -1,0 +1,121 @@
+settings:
+  log_mode: text
+  log_level: INFO
+  output_mode: cli
+  update_interval: 60
+  market_pairs:
+    - BTC/USDT
+    - ETH/BTC
+    - XRP/BTC
+    - ADA/BTC
+exchanges:
+  binance:
+    required:
+      enabled: true
+indicators:
+    rsi:
+        - enabled: true
+          alert_enabled: false
+          alert_frequency: once
+          signal:
+            - rsi
+          hot: 30
+          cold: 70
+          candle_period: 5m
+          period_count: 14
+        - enabled: true
+          alert_enabled: false
+          alert_frequency: once
+          signal:
+            - rsi
+          hot: 30
+          cold: 70
+          candle_period: 15m
+          period_count: 14
+        - enabled: true
+          alert_enabled: false
+          alert_frequency: once
+          signal:
+            - rsi
+          hot: 30
+          cold: 70
+          candle_period: 1h
+          period_count: 14
+    mfi:
+      - enabled: false
+    momentum:
+      - enabled: false
+    obv:
+      - enabled: false
+    stoch_rsi:
+      - enabled: false
+    ichimoku:
+      - enabled: false
+    macd:
+      - enabled: true
+        signal: 
+          - macd
+        candle_period: 5m
+        alert_frequency: once
+        alert_enabled: false
+        hot: 0
+        cold: 0
+      - enabled: true
+        alert_enabled: false
+        alert_frequency: once
+        signal:
+          - macdsignal
+        hot: 0
+        cold: 0
+        candle_period: 5m
+      - enabled: true
+        signal: 
+          - macd
+        candle_period: 15m
+        alert_frequency: once
+        alert_enabled: false
+        hot: 0
+        cold: 0
+      - enabled: true
+        alert_enabled: false
+        alert_frequency: once
+        signal:
+          - macdsignal
+        hot: 0
+        cold: 0
+        candle_period: 15m
+notifiers:
+    stdout:
+      required:
+        enable: true
+      optional:
+        template: "{{exchange}}-{{market}}-{{indicator}}-{{indicator_number}} is {{status}}!{{ '\n' -}}"
+    slack:
+      required:
+        webhook: https://hooks.slack.com/services/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
+      optional:
+        template: "{{exchange}}-{{market}}-{{indicator}}-{{indicator_number}} is {{status}}!{{ '\n' -}}"
+crossovers:
+  std_crossover:
+    - enabled: true
+      alert_enabled: false
+      alert_frequency: once
+      key_indicator: macd
+      key_indicator_index: 0
+      key_indicator_type: indicators
+      key_signal: macd
+      crossed_indicator: macd
+      crossed_indicator_index: 1
+      crossed_indicator_type: indicators
+      crossed_signal: macdsignal
+    - enabled: true
+      alert_enabled: true
+      alert_frequency: once
+      key_indicator: macd
+      key_indicator_index: 2
+      key_indicator_type: indicators
+      key_signal: macd
+      crossed_indicator: macd
+      crossed_indicator_index: 3
+      crossed_indicator_type: indicators
+      crossed_signal: macdsignal

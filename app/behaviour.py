@@ -279,6 +279,8 @@ class Behaviour():
         """
 
         historical_data = list()
+        # Recreate the failure to fetch historical data and subsequent error by returning an empty data set
+        return historical_data
         try:
             historical_data = self.exchange_interface.get_historical_data(
                 market_pair,
